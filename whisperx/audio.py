@@ -13,6 +13,7 @@ from .utils import exact_div
 SAMPLE_RATE = 16000
 N_FFT = 400
 # N_MELS = 80
+N_MELS = 128
 HOP_LENGTH = 160
 CHUNK_LENGTH = 30
 N_SAMPLES = CHUNK_LENGTH * SAMPLE_RATE  # 480000 samples in a 30-second chunk
@@ -80,8 +81,8 @@ def pad_or_trim(array, length: int = N_SAMPLES, *, axis: int = -1):
 
 
 @lru_cache(maxsize=None)
-# def mel_filters(device, n_mels: int = N_MELS) -> torch.Tensor:
-def mel_filters(device, n_mels: int) -> torch.Tensor:
+def mel_filters(device, n_mels: int = N_MELS) -> torch.Tensor:
+# def mel_filters(device, n_mels: int) -> torch.Tensor:
     """
     load the mel filterbank matrix for projecting STFT into a Mel spectrogram.
     Allows decoupling librosa dependency; saved using:
@@ -101,8 +102,8 @@ def mel_filters(device, n_mels: int) -> torch.Tensor:
 
 def log_mel_spectrogram(
     audio: Union[str, np.ndarray, torch.Tensor],
-    # n_mels: int = N_MELS,
-    n_mels: int,
+    n_mels: int = N_MELS,
+    # n_mels: int,
     padding: int = 0,
     device: Optional[Union[str, torch.device]] = None,
 ):
